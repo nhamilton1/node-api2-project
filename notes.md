@@ -41,13 +41,33 @@ router.post('/', async (req, res) => {
             })
         } else {
             const newPost = await Posts.insert({ title, contents })
-            res.status(201).json({ id: newPost, title, contents })
+            res.status(201).json({id: newPost, title, contents})
         }
     } catch (err) {
         res.status(500).json({
             message: "There was an error while saving the post to the database"
         })
     }
+
+    // const { title, contents } = req.body
+    // if (!title || !contents) {
+    //     res.status(400).json({
+    //         message: "Please provide title and contents for the post"
+    //     })
+    // } else {
+    //     Posts.insert({ title, contents })
+    //         .then(({ id }) => {
+    //             return Posts.findById(id)
+    //         })
+    //         .then(post => {
+    //             res.status(201).json(post)
+    //         })
+    //         .catch(err => {
+    //             res.status(500).json({
+    //                 message: "There was an error while saving the post to the database"
+    //             })
+    //         })
+    // }
 })
 
 router.put('/:id', (req, res) => {
