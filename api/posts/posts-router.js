@@ -40,8 +40,8 @@ router.post('/', async (req, res) => {
                 message: "Please provide title and contents for the post"
             })
         } else {
-            const newPost = await Posts.insert({ title, contents })
-            res.status(201).json({ id: newPost, title, contents })
+            const postId = await Posts.insert({ title, contents })
+            res.status(201).json({ id: postId, title, contents })
         }
     } catch (err) {
         res.status(500).json({
