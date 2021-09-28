@@ -12,10 +12,9 @@ server.use('/api/posts', postsRouter)
 
 server.get('*', (req, res) => {
     res.send(`
-      <h2>Lambda Shelter API</h>
-      <p>Welcome to the Lambda Shelter API</p>
+      <h2>Lambda Posts API</h>
     `);
   });
   
-  module.exports = server;
-  
+module.exports = server;
+
