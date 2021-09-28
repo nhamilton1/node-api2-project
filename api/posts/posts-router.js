@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
             res.status(200).json(posts)
         })
         .catch(err => {
-            console.log(err)
             res.status(500).json({
                 message: "The posts information could not be retrieved"
             })
@@ -27,7 +26,6 @@ router.get('/:id', (req, res) => {
             }
         })
         .catch(err => {
-            console.log(err)
             res.status(500).json({
                 message: "The post information could not be retrieved"
             })
@@ -92,9 +90,6 @@ router.put('/:id', (req, res) => {
         
 })
 
-
-
-
 router.delete('/:id', async (req, res) => {
     try {
         const deletedPost = await Posts.findById(req.params.id)
@@ -113,25 +108,23 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-
-// router.get('/:id/comments', (req, res) => {
-//     Posts.findById(req.params.id)
-//         .then(post => {
-//             if(post.length > 0) {
-//                 res.status(200).json(post)
-//             } else {
-//                 res.status(404).json({
-//                     message: "The post with the specified ID does not exist"
-//                 })
-//             }
-//         })
-//         .catch(err => {
-//             console.log(err)
-//             res.status(500).json({
-//                 message: "The comments information could not be retrieved"
-//             })
-//         })
-// })
+router.get('/:id/comments', async (req, res) => {
+    try {
+        const post = await Posts.findById(req.params.id)
+        if (!post) {
+            res.status(404).json({
+                message: "The post with the specified ID does not exist" 
+            })
+        } else {
+            const comments = await Posts.findCommentById(req.params.id)
+            res.status(200).json(comments)
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: "The comments information could not be retrieved" 
+        })
+    }
+})
 
 
 module.exports = router
